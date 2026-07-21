@@ -1,0 +1,20 @@
+{
+  "name": "CMozGlow",
+  "version": "1.2.1",
+  "description": "Beginner-friendly WS2812B/NeoPixel library for ESP32 boards (S3, S2, C3 and classic). Plain-English error handling, automatic power budgeting for wearables, live status pixel, async RMT engine, optional dual-core AutoPilot mode, and ten fashion-tech effects including a Morse messenger.",
+  "keywords": "ws2812b, neopixel, led, esp32, esp32-s3, wearable, e-textiles, fashion-tech, rmt, addressable",
+  "authors": [
+    {
+      "name": "TinkerTailor.ca (CMozMaker)",
+      "url": "https://tinkertailor.ca"
+    }
+  ],
+  "license": "MIT",
+  "homepage": "https://tinkertailor.ca",
+  "frameworks": "arduino",
+  "platforms": "espressif32",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cmoz/CMozESP32Board/tree/main/CMozGlow.git"
+  }
+}
