@@ -6,6 +6,8 @@ Your CMoz ESP32-S3 Mini already has one addressable LED on board (on **GPIO 3**)
 
 ---
 
+Want the code written for you and you change the effects? [Interactive code generator](https://cmoz.github.io/CMozESP32Board/)
+
 ## Why CMozGlow instead of the usual libraries?
 
 | | CMozGlow | Typical LED libraries |
