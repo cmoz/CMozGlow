@@ -29,10 +29,12 @@ Because effects never block, your buttons, sensors and Bluetooth code keep runni
 
 ### 1. Install the library
 
-**Arduino IDE** — *Sketch → Include Library → Add .ZIP Library…* and pick `CMozGlow.zip`. Then in **Tools**:
+**Arduino IDE** — open *Tools → Manage Libraries…*, search for **CMozGlow**, and click Install. Then in **Tools**:
 
 * **Board:** ESP32S3 Dev Module
 * **USB CDC On Boot:** Enabled ← don't skip this! It's how `Serial` (and CMozGlow's friendly error messages) reach the Serial Monitor over the USB port.
+
+you can also download the .zip file to manually install → Add .ZIP Library…* and pick `CMozGlow.zip`. 
 
 ### 2. Upload your first sketch
 
