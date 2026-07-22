@@ -29,17 +29,6 @@ Because effects never block, your buttons, sensors and Bluetooth code keep runni
 
 ### 1. Install the library
 
-**PlatformIO** — add the library folder to your project's `lib/` directory, or once published:
-
-```ini
-; platformio.ini
-[env:cmoz_s3_mini]
-platform  = espressif32
-board     = esp32-s3-devkitc-1
-framework = arduino
-lib_deps  = CMozGlow
-```
-
 **Arduino IDE** — *Sketch → Include Library → Add .ZIP Library…* and pick `CMozGlow.zip`. Then in **Tools**:
 
 * **Board:** ESP32S3 Dev Module
