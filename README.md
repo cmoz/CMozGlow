@@ -6,6 +6,8 @@
 
 Your CMoz ESP32-S3 Mini already has one addressable LED on board (on **GPIO 3**). This library makes it — and any strip you add — glow beautifully with about five lines of code, and it *talks to you in plain English when something goes wrong*.
 
+Want to just get started immediately? Use our [code generator](https://cmoz.github.io/CMozESP32Board/) page.
+
 ---
 
 ## Why CMozGlow instead of the usual libraries?
