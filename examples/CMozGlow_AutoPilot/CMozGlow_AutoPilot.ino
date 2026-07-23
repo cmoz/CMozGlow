@@ -1,4 +1,29 @@
 /*
+  --------------------------------------------------------------------
+  Christine Farion  ·  http://www.christinefarion.com
+  CMozMaker · Tinker Tailor
+  https://www.youtube.com/@CMozMaker
+  https://www.tinkertailor.ca
+
+  Tinker Tailor is a small but passionate shop dedicated to the wearable
+  technology maker community. We provide a curated selection of tools,
+  components, and materials like conductive fabrics, circuit boards, and
+  more to help creators bring their innovative ideas to life. With a focus
+  on education and creativity, we also offer tutorials, resources, and
+  expert advice to empower makers at every skill level.
+  At Tinker Tailor we believe in making wearable tech accessible, fun,
+  and inspiring for everyone!
+
+  More projects in my book:
+  https://www.amazon.ca/Ultimate-Informed-Wearable-Technology-hands/dp/1803230592
+
+  Questions about this build? Ask in Discussions —
+  https://github.com/cmoz/YouTube/discussions
+  Please include your board, IDE, and the error message.
+  --------------------------------------------------------------------
+*/
+
+/*
   CMozGlow_AutoPilot — give your LEDs their own CPU core (advanced)
   ------------------------------------------------------------------
   The ESP32-S3 has TWO processor cores. Your sketch's loop() runs on

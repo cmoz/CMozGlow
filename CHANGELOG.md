@@ -1,9 +1,18 @@
 # Changelog
 
-## 1.2.1 — 2026-07-21
+## 1.2.2
+### Fixed
+- **`url` field now points to the GitHub repo** instead of the shop homepage. Clicking
+  "More info" in the Arduino Library Manager landed users on tinkertailor.ca with no
+  explanation of what the library was — it now goes to the source, docs and issue tracker.
+- Corrected the `repository` field in `library.json` (was a placeholder).
+### Added
+- README links to the library's shop page and to tinkertailor.ca.
+
+## 1.2.1
 ### Changed
-- Documentation clarified: any valid GPIO pin can be used as the data pin on your own
-  ESP32 board — the capability already existed but wasn't explained.
+- Added author/contact header to all source files and examples (Christine Farion,
+  CMozMaker, Tinker Tailor, book link, and where to ask build questions).
 
 ## 1.2.0 — 2026-07-21
 ### Added

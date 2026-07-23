@@ -2,11 +2,11 @@
 
 **The friendly WS2812B library for the CMoz ESP32-S3 Mini** — made for wearables and fashion tech by [TinkerTailor.ca](https://tinkertailor.ca) and the CMozMaker channel.
 
+📦 **Shop page:** [Library program for WS2812B / NeoPixels](https://www.tinkertailor.ca/products/library-program-for-ws2812b-neopixels) · 🛒 **Boards, LEDs & conductive fabrics:** [tinkertailor.ca](https://www.tinkertailor.ca)
+
 Your CMoz ESP32-S3 Mini already has one addressable LED on board (on **GPIO 3**). This library makes it — and any strip you add — glow beautifully with about five lines of code, and it *talks to you in plain English when something goes wrong*.
 
 ---
-
-Want the code written for you and you change the effects? [Interactive code generator](https://cmoz.github.io/CMozESP32Board/)
 
 ## Why CMozGlow instead of the usual libraries?
 
@@ -29,12 +29,22 @@ Because effects never block, your buttons, sensors and Bluetooth code keep runni
 
 ### 1. Install the library
 
-**Arduino IDE** — open *Tools → Manage Libraries…*, search for **CMozGlow**, and click Install. Then in **Tools**:
+**PlatformIO** — add one line to `platformio.ini`:
+
+```ini
+; platformio.ini
+[env:cmoz_s3_mini]
+platform  = espressif32
+board     = esp32-s3-devkitc-1
+framework = arduino
+monitor_speed = 115200
+lib_deps  = cmoz/CMozGlow @ ^1.2.2
+```
+
+**Arduino IDE** — *Sketch → Include Library → Add .ZIP Library…* and pick `CMozGlow.zip`. Then in **Tools**:
 
 * **Board:** ESP32S3 Dev Module
 * **USB CDC On Boot:** Enabled ← don't skip this! It's how `Serial` (and CMozGlow's friendly error messages) reach the Serial Monitor over the USB port.
-
-you can also download the .zip file to manually install → Add .ZIP Library…* and pick `CMozGlow.zip`. 
 
 ### 2. Upload your first sketch
 
