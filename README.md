@@ -6,8 +6,6 @@
 
 Your CMoz ESP32-S3 Mini already has one addressable LED on board (on **GPIO 3**). This library makes it — and any strip you add — glow beautifully with about five lines of code, and it *talks to you in plain English when something goes wrong*.
 
-Want to just get started immediately? Use our [code generator](https://cmoz.github.io/CMozESP32Board/) page.
-
 ---
 
 ## Why CMozGlow instead of the usual libraries?
@@ -56,7 +54,7 @@ Open **File → Examples → CMozGlow → CMozGlow_Basics**, or paste this:
 #include <CMozGlow.h>
 
 // ══════════ CHANGE THESE ══════════
-const uint8_t  EFFECT   = 8;    // 0-9, table below
+const uint8_t  EFFECT   = 8;    // 0-13, table below
 const uint16_t NUM_LEDS = 1;    // onboard only = 1
 const uint8_t  SPEED    = 5;    // 1 dreamy … 10 party
 const uint32_t COLOR    = CMozGlow::Color(255, 42, 120);
@@ -125,6 +123,10 @@ On a board *without* an onboard pixel, `NUM_LEDS` is simply your strip length �
 | 7 | Ember | `CMOZ_FX_EMBER` | warm campfire glow |
 | 8 | Aurora | `CMOZ_FX_AURORA` | northern lights 🇨🇦 |
 | 9 | Morse | `CMOZ_FX_MORSE` | blinks a real Morse-code message |
+| 10 | Flicker | `CMOZ_FX_FLICKER` | jack-o'-lantern flame — warm, uneven candle flicker |
+| 11 | Phantom | `CMOZ_FX_PHANTOM` | eerie slow drift between sickly green and violet |
+| 12 | Twinkle | `CMOZ_FX_TWINKLE` | fairy-light sparkle on a warm base |
+| 13 | Candy Cane | `CMOZ_FX_CANDYCANE` | red-and-white stripes chasing along the strip |
 
 All effects respect `setEffectColor()` (except Ember and Aurora, which use their own palettes) and `setEffectSpeed(1–10)`.
 
@@ -201,7 +203,7 @@ glow.statusPixel(true);   // pixel 0: dim green = happy, red = an error happened
 | `CMOZ_ERR_ALLOC` | out of memory (very long strip) |
 | `CMOZ_ERR_RMT` | the LED peripheral failed to start |
 | `CMOZ_ERR_INDEX` | pixel index past the end of the strip |
-| `CMOZ_ERR_BAD_EFFECT` | effect number doesn't exist (valid: 0–9) |
+| `CMOZ_ERR_BAD_EFFECT` | effect number doesn't exist (valid: 0–13) |
 | `CMOZ_ERR_BAD_ARG` | argument out of range |
 | `CMOZ_ERR_TASK` | AutoPilot's background task couldn't start or stop |
 
@@ -237,7 +239,7 @@ uint16_t estimatedCurrentmA();
 bool powerLimited();
 
 // effects (non-blocking)
-bool setEffect(0-9);               // or CMOZ_FX_… constants
+bool setEffect(0-13);              // or CMOZ_FX_… constants
 void setEffectColor(color);
 bool setEffectSpeed(1-10);
 bool setMorseMessage("TEXT 123");

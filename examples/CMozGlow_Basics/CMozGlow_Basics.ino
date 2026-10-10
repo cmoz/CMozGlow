@@ -41,6 +41,10 @@
   │ 7  │ Ember     │ warm campfire glow                           │
   │ 8  │ Aurora    │ northern lights 🇨🇦                           │
   │ 9  │ Morse     │ blinks a real Morse-code message             │
+  │ 10 │ Flicker   │ jack-o'-lantern flame, warm and uneven       │
+  │ 11 │ Phantom   │ eerie drift between sickly green and violet  │
+  │ 12 │ Twinkle   │ fairy-light sparkle on a warm base           │
+  │ 13 │ CandyCane │ red-and-white stripes chasing along the strip│
   └────┴───────────┴──────────────────────────────────────────────┘
 
   Wiring reminder: the onboard pixel lives on GPIO 3. Solder/clip your
@@ -51,7 +55,7 @@
 #include <CMozGlow.h>
 
 // ══════════════════ CHANGE THESE ══════════════════
-const uint8_t  EFFECT   = 8;    // 0-9, see the table above
+const uint8_t  EFFECT   = 8;    // 0-13, see the table above
 const uint16_t NUM_LEDS = 1;    // onboard only = 1. With a 12-LED strip = 13
 const uint8_t  SPEED    = 5;    // 1 = dreamy ... 10 = party
 const uint32_t COLOR    = CMozGlow::Color(255, 42, 120); // R, G, B

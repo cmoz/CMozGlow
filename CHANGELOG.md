@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.3.0
+### Added
+- Four new effects (IDs 10-13), bringing the total to 14 — existing effect
+  numbers are unchanged:
+  - Flicker (10) — jack-o'-lantern flame, warm and uneven
+  - Phantom (11) — eerie slow drift between sickly green and violet
+  - Twinkle (12) — fairy-light sparkle on a warm base
+  - Candy Cane (13) — red-and-white stripes chasing along the strip
+  Flicker and Phantom suit Halloween builds; Twinkle and Candy Cane suit
+  Christmas — but all four work year-round.
+### Changed
+- `CMozGlow_Basics` example's effect table and range comment now list 0–13.
+
 ## 1.2.2
 ### Fixed
 - **`url` field now points to the GitHub repo** instead of the shop homepage. Clicking

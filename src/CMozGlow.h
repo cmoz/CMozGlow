@@ -96,6 +96,10 @@ enum CMozEffect : uint8_t {
   CMOZ_FX_EMBER,       // warm campfire glow
   CMOZ_FX_AURORA,      // northern lights (a little Canada in every project)
   CMOZ_FX_MORSE,       // blinks a real Morse-code message!
+  CMOZ_FX_FLICKER,     // jack-o'-lantern flame — warm, uneven candle flicker
+  CMOZ_FX_PHANTOM,     // eerie slow drift between sickly green and violet
+  CMOZ_FX_TWINKLE,     // fairy-light sparkle on a warm base
+  CMOZ_FX_CANDYCANE,   // red-and-white stripes chasing along the strip
   CMOZ_FX_COUNT        // number of effects (not an effect itself)
 };
 
@@ -215,6 +219,7 @@ private:
   void fxSolid();    void fxSequin();  void fxCatwalk(); void fxLoom();
   void fxHeartbeat();void fxFirefly(); void fxSilk();    void fxEmber();
   void fxAurora();   void fxMorse();
+  void fxFlicker();  void fxPhantom(); void fxTwinkle(); void fxCandycane();
 };
 
 #endif // CMOZ_GLOW_H

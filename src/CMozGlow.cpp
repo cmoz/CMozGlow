@@ -276,7 +276,7 @@ const char* CMozGlow::errorText() const {
     case CMOZ_ERR_ALLOC:       return "not enough memory for that many LEDs";
     case CMOZ_ERR_RMT:         return "the RMT LED driver failed or timed out — is another library using it?";
     case CMOZ_ERR_INDEX:       return "pixel index is past the end of the strip — indexes run 0 to numPixels()-1";
-    case CMOZ_ERR_BAD_EFFECT:  return "no effect with that number — valid effects are 0 to 9";
+    case CMOZ_ERR_BAD_EFFECT:  return "no effect with that number — valid effects are 0 to 13";
     case CMOZ_ERR_BAD_ARG:     return "an argument was out of range — check the docs for valid values";
     case CMOZ_ERR_TASK:        return "AutoPilot couldn't start or stop its background task";
   }
@@ -431,7 +431,8 @@ bool CMozGlow::setMorseMessage(const char* msg) {
 const char* CMozGlow::effectName(uint8_t id) {
   static const char* names[CMOZ_FX_COUNT] = {
     "Solid", "Sequin", "Catwalk", "Loom", "Heartbeat",
-    "Firefly", "Silk", "Ember", "Aurora", "Morse"
+    "Firefly", "Silk", "Ember", "Aurora", "Morse",
+    "Flicker", "Phantom", "Twinkle", "Candy Cane"
   };
   return (id < CMOZ_FX_COUNT) ? names[id] : "?";
 }
@@ -439,7 +440,9 @@ const char* CMozGlow::effectName(uint8_t id) {
 uint16_t CMozGlow::frameInterval() const {
   static const uint16_t base[CMOZ_FX_COUNT] =
   //  Solid Sequin Catwalk Loom Heart Fly Silk Ember Aurora Morse
-    { 200,  45,    35,     120, 20,   30, 30,  45,   35,    10 };
+    { 200,  45,    35,     120, 20,   30, 30,  45,   35,    10,
+  //  Flick Phantom Twinkle Candy
+      45,   40,     40,     50 };
   uint32_t iv = (uint32_t)base[_fx] * (13 - _speed) / 8;  // speed 1..10
   return (iv < 5) ? 5 : (uint16_t)iv;
 }
@@ -462,6 +465,10 @@ bool CMozGlow::update() {
     case CMOZ_FX_EMBER:     fxEmber();     break;
     case CMOZ_FX_AURORA:    fxAurora();    break;
     case CMOZ_FX_MORSE:     fxMorse();     break;
+    case CMOZ_FX_FLICKER:   fxFlicker();   break;
+    case CMOZ_FX_PHANTOM:   fxPhantom();   break;
+    case CMOZ_FX_TWINKLE:   fxTwinkle();   break;
+    case CMOZ_FX_CANDYCANE: fxCandycane(); break;
   }
   _step++;
   return show();
@@ -684,5 +691,70 @@ void CMozGlow::fxMorse() {
     _mElem++;
     if (pat[_mElem] == 0) { _mElem = 0; _mChar++; _mNextAt = now + unit * 3; }
     else                  { _mNextAt = now + unit; }
+  }
+}
+
+// Flicker — a jack-o'-lantern flame. The whole strip flickers together as a
+// warm orange flame, with small per-pixel variation so it never looks flat.
+// Ignores fxColor (a flame is a flame). Uses _heat[0] as the shared envelope.
+void CMozGlow::fxFlicker() {
+  int16_t env = _heat[0] ? _heat[0] : 200;
+  env += random(-26, 27);                 // random-walk the flame brightness
+  if (env < 120) env = 120;               // never gutters out completely
+  if (env > 255) env = 255;
+  _heat[0] = (uint8_t)env;
+  for (uint16_t i = 0; i < _count; i++) {
+    int16_t b = env - random(0, 34);       // each pixel slightly dimmer, varying
+    if (b < 90) b = 90;
+    uint8_t r = (uint8_t)b;
+    uint8_t g = (uint8_t)((b * 100) >> 8); // warm orange: G ~0.39 R
+    uint8_t bl = (b > 210) ? (uint8_t)((b - 210) / 3) : 0; // faint yellow tips
+    setPixel(i, r, g, bl);
+  }
+}
+
+// Phantom — a cold, eerie breath that drifts between sickly green and violet,
+// slowly and unevenly, like something haunting the strip.
+void CMozGlow::fxPhantom() {
+  float t = (millis() - _t0) * 0.0012f;
+  for (uint16_t i = 0; i < _count; i++) {
+    float wave = sinf(i * 0.22f + t * 1.3f) * 0.5f + 0.5f;     // 0..1 green<->violet
+    float breath = 0.35f + 0.4f * (sinf(t * 2.1f - i * 0.05f) * 0.5f + 0.5f);
+    // green (40,255,60) -> violet (150,20,210)
+    uint8_t r = (uint8_t)((40  + (150 - 40)  * wave) * breath);
+    uint8_t g = (uint8_t)((255 + (20  - 255) * wave) * breath);
+    uint8_t b = (uint8_t)((60  + (210 - 60)  * wave) * breath);
+    setPixel(i, r, g, b);
+  }
+}
+
+// Twinkle — fairy lights. A dim warm base, with random pixels catching bright
+// and fading out gently. _heat holds each pixel's twinkle level. fxColor tints
+// the sparkle (default use looks like warm white when fxColor is near white).
+void CMozGlow::fxTwinkle() {
+  uint8_t fr = (_fxColor >> 16) & 0xFF, fg = (_fxColor >> 8) & 0xFF, fb = _fxColor & 0xFF;
+  uint8_t sparks = 1 + _count / 12;
+  for (uint8_t s = 0; s < sparks; s++)
+    if (random(100) < 30) _heat[random(_count)] = 255;   // ignite
+  for (uint16_t i = 0; i < _count; i++) {
+    uint16_t lvl = _heat[i];
+    if (lvl > 6) _heat[i] = lvl - 6; else _heat[i] = 0;   // fade
+    uint16_t v = _heat[i];
+    // warm-white base (so the strip is never fully dark) + colored sparkle on top
+    uint16_t r = 14 + (fr * v) / 255;  if (r > 255) r = 255;
+    uint16_t g = 9  + (fg * v) / 255;  if (g > 255) g = 255;
+    uint16_t b = 3  + (fb * v) / 255;  if (b > 255) b = 255;
+    setPixel(i, (uint8_t)r, (uint8_t)g, (uint8_t)b);
+  }
+}
+
+// Candy Cane — classic red-and-white barber stripes chasing along the strip.
+void CMozGlow::fxCandycane() {
+  const uint8_t stripe = 3;                       // pixels per colour band
+  uint16_t shift = _step / 1;                     // movement per frame
+  for (uint16_t i = 0; i < _count; i++) {
+    bool white = (((i + shift) / stripe) & 1);
+    if (white) setPixel(i, 255, 255, 255);
+    else       setPixel(i, 220, 0, 20);           // candy red
   }
 }
